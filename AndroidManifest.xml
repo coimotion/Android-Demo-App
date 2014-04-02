@@ -22,6 +22,19 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <meta-data
+            android:name="coim_app_key"
+            android:value="518d517f-2c91-0cf9-f3f1-a0f3133e85b0" />
+        <meta-data
+            android:name="coim_app_code"
+            android:value="demoApp" />
+
+        <activity
+            android:name="com.gocharm.coimotion.apptemplate.LoginActivity"
+            android:label="@string/title_activity_login"
+            android:windowSoftInputMode="adjustResize|stateVisible" >
+        </activity>
     </application>
 
 </manifest>
