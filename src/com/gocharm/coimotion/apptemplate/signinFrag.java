@@ -9,13 +9,14 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
-public class signinFrag extends Fragment{
+public class SigninFrag extends Fragment
+{
 	
 	private EditText username;
 	private EditText password;
 	private Button submit;
 	
-	public signinFrag() {
+	public SigninFrag() {
 	}
 
 	@Override
@@ -28,19 +29,18 @@ public class signinFrag extends Fragment{
 	
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
+		super.onViewCreated(view, savedInstanceState);
 		username = (EditText) view.findViewById(R.id.email);
 		password = (EditText) view.findViewById(R.id.password);
 		submit = (Button) view.findViewById(R.id.sign_in_button);
 		submit.setOnClickListener(new OnClickListener() {
-			
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				
 			}
 		});
-		super.onViewCreated(view, savedInstanceState);
+		
 	}
 
 }

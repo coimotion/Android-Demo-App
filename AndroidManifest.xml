@@ -35,6 +35,18 @@
             android:label="@string/title_activity_login"
             android:windowSoftInputMode="adjustResize|stateVisible" >
         </activity>
+        <activity
+            android:name="com.gocharm.coimotion.apptemplate.MainFrag"
+            android:label="@string/title_activity_main_frag" >
+        </activity>
+        <activity
+            android:name="com.gocharm.coimotion.apptemplate.ShowListFrag"
+            android:label="@string/title_activity_show_list_frag" >
+        </activity>
+        <activity
+            android:name="com.gocharm.coimotion.apptemplate.TestView"
+            android:label="@string/title_activity_test_view" >
+        </activity>
     </application>
 
 </manifest>
