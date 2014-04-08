@@ -1,45 +1,20 @@
 package com.gocharm.coimotion.apptemplate;
 
-import java.util.Map;
-import org.apache.http.HttpResponse;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import com.coimotion.csdk.common.COIMCallListener;
-import com.coimotion.csdk.common.COIMException;
-import com.coimotion.csdk.util.ReqUtil;
-
-
-import android.app.Application;
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBar.OnNavigationListener;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.SpinnerAdapter;
 
 public class MainActivity extends ActionBarActivity {
 	private final static String LOG_TAG = "mainActivity";
-	private final static String checkTokenURL = "go4art/account/profile";
 	
 	public DrawerLayout mDrawerLayout;
 	private ActionBarDrawerToggle mDrawerToggle;
@@ -55,7 +30,7 @@ public class MainActivity extends ActionBarActivity {
 	public static final String[] catIDs = {
 	    "1", "2", "3", "4", "6", "7", "8", "17", "15"
 	};
-	
+	/*
 	// Adapter
 	SpinnerAdapter adapter =
 	        ArrayAdapter.createFromResource(this, R.array.actions,
@@ -78,28 +53,12 @@ public class MainActivity extends ActionBarActivity {
 	    }
 
 	};
+	*/
 	
-	private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
-		  @Override
-		  public void onReceive(Context context, Intent intent) {
-		    // Get extra data included in the Intent
-		    Log.i("receiver", "unlock");
-		    mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
-		  }
-		};
-	
-	protected void onDestroy() {
-		super.onDestroy();
-		LocalBroadcastManager.getInstance(this).unregisterReceiver(mMessageReceiver);
-	};
-		
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		
-		LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver, new IntentFilter("unlock-drawer"));
-		
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.drw_layout);
 	    // 設定 Drawer 的影子
 	    //mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
@@ -128,11 +87,11 @@ public class MainActivity extends ActionBarActivity {
 	                        ShowListFrag listFrag = ShowListFrag.newInstance(catIDs[mCurrentMenuItemPosition]);
 	        				FragmentTransaction ft  = getSupportFragmentManager().beginTransaction();
 	        				ft.replace(R.id.container, listFrag);
-	        				ft.addToBackStack(null);
+	        				//ft.addToBackStack(null);
 	        				ft.commit();
 	                    } else {
-	                        // 將 Title 設定回 APP 的名稱
-	                        getSupportActionBar().setTitle( "" + ((title == null)? title : R.string.app_name));
+	                        
+	                        getSupportActionBar().setTitle(title);
 	                    }
 	                }
 	    };
@@ -140,60 +99,21 @@ public class MainActivity extends ActionBarActivity {
 	    mDrawerLayout.setDrawerListener(mDrawerToggle);
 	    
 		if (savedInstanceState == null) {
+			Bundle extras = getIntent().getExtras();
+			String catID = extras.getString("catID");
+			for (int i = 0; i < 9; i++) {
+				
+				if (catIDs[i].equals(catID)) {
+					Log.i(LOG_TAG, "equals " + MENU_ITEMS[i]);
+					title = MENU_ITEMS[i];
+					getSupportActionBar().setTitle(MENU_ITEMS[i]);
+				}
+			}
+			ShowListFrag slFrag = ShowListFrag.newInstance(catID);
 			getSupportFragmentManager().beginTransaction()
-				.add(R.id.container, new MainFrag()).commit();
-			mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
-					//.add(R.id.container, new SigninFrag()).commit();
+				.replace(R.id.container, slFrag).commit();
 		}
 		setDrawerMenu();
-		
-		try {
-			ReqUtil.initSDK(getApplication());
-		} catch (COIMException e1) {
-			// TODO Auto-generated catch block
-			Log.i(LOG_TAG,"ex: " + e1.getLocalizedMessage());
-			e1.printStackTrace();
-		} catch (Exception e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		
-		ReqUtil.send(checkTokenURL, null, new COIMCallListener() {
-			
-			@Override
-			public void onSuccess(Map<String, Object> results) {
-				// TODO Auto-generated method stub
-				Log.i(LOG_TAG, "" + results);
-				//if (results.get("errCode").equals("0")) {
-					JSONObject values = (JSONObject) results.get("value");
-					try {
-						Log.i(LOG_TAG,"dspname: " + values.getString("dspName"));
-						if(!values.getString("dspName").equals("Guest")) {
-							
-							getSupportFragmentManager().beginTransaction()
-							.replace(R.id.container, new SigninFrag()).commit();
-							
-						}
-					} catch (JSONException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					
-				//}
-			}
-			
-			@Override
-			public void onProgress(Integer arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void onFail(HttpResponse arg0, Exception arg1) {
-				// TODO Auto-generated method stub
-				Log.i(LOG_TAG, "err: " + arg1.getLocalizedMessage());
-			}
-		});
 	}
 	
 	private void setDrawerMenu() {

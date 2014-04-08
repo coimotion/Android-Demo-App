@@ -1,6 +1,5 @@
 package com.gocharm.coimotion.apptemplate;
 
-import java.nio.channels.FileChannel.MapMode;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -13,8 +12,7 @@ import org.json.JSONObject;
 import com.coimotion.csdk.common.COIMCallListener;
 import com.coimotion.csdk.util.ReqUtil;
 
-import android.R.anim;
-import android.R.integer;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -22,8 +20,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.AnalogClock;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.AdapterView.OnItemClickListener;
@@ -39,7 +35,7 @@ public class ShowListFrag extends Fragment {
 	}
 	
 	private SimpleAdapter adapter;
-	ArrayList<HashMap<String,String>> list = new ArrayList<HashMap<String,String>>();
+	private ArrayList<HashMap<String,String>> dataArray = new ArrayList<HashMap<String,String>>();
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -61,6 +57,11 @@ public class ShowListFrag extends Fragment {
 	        public void onItemClick(AdapterView<?> parent, View view,
 	                int position, long id) {
 	            Log.i(LOG_TAG, "click on " + position);
+	            String spID = (String)dataArray.get(position).get("spID");
+	            Intent intent = new Intent();
+				intent.putExtra("spID", spID);
+				intent.setClass(getActivity(), DetailActivity.class);
+				startActivity(intent);
 	        }
 	    });
 		Map<String, Object> mapParam = new HashMap<String, Object>();
@@ -72,7 +73,6 @@ public class ShowListFrag extends Fragment {
 			@Override
 			public void onSuccess(Map<String, Object> result) {
 				// TODO Auto-generated method stub
-				Log.i(LOG_TAG, "data: " + result);
 				JSONArray arr= new JSONArray();
 				try {
 					arr = ((new JSONObject(result)).getJSONObject("value")).getJSONArray("list");
@@ -94,13 +94,12 @@ public class ShowListFrag extends Fragment {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-					list.add(item);
+					dataArray.add(item);
 					
 				}
-				//adapter = new SimpleAdapter(this, list, android.R.layout.simple_list_item_2, new String[]{"title", "placeName"}, new int[]{android.R.id.text1, android.R.id.text2});
 				adapter = new SimpleAdapter(
 						getActivity().getApplicationContext(), 
-						list, R.layout.show_list_row, 
+						dataArray, R.layout.row_show_list, 
 						new String[]{"title", "placeName"}, 
 						new int[]{R.id.rowTitle, R.id.rowSubTitle});
 				mShowList.setAdapter(adapter);

@@ -8,23 +8,23 @@ package com.gocharm.coimotionsdk;
 
 public final class R {
 	public static final class dimen {
-		public static final int activity_horizontal_margin = 0x7f080011;
-		public static final int activity_vertical_margin = 0x7f080012;
+		public static final int activity_horizontal_margin = 0x7f0a0011;
+		public static final int activity_vertical_margin = 0x7f0a0012;
 	}
 	public static final class drawable {
-		public static final int ic_launcher = 0x7f020065;
+		public static final int ic_launcher = 0x7f02007d;
 	}
 	public static final class id {
-		public static final int container = 0x7f05003d;
+		public static final int container = 0x7f06003f;
 	}
 	public static final class layout {
-		public static final int activity_main = 0x7f030017;
+		public static final int activity_main = 0x7f03001a;
 	}
 	public static final class string {
-		public static final int action_settings = 0x7f0a0010;
-		public static final int app_name = 0x7f0a000d;
-		public static final int hello_world = 0x7f0a000f;
-		public static final int title_activity_main = 0x7f0a000e;
+		public static final int action_settings = 0x7f07002b;
+		public static final int app_name = 0x7f070028;
+		public static final int hello_world = 0x7f07002a;
+		public static final int title_activity_main = 0x7f070029;
 	}
 	public static final class style {
 		public static final int AppBaseTheme = 0x7f0b0083;
