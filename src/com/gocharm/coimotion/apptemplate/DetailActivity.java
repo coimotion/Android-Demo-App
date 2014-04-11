@@ -1,22 +1,32 @@
 package com.gocharm.coimotion.apptemplate;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Map;
 
 import org.apache.http.HttpResponse;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.coimotion.csdk.common.COIMCallListener;
 import com.coimotion.csdk.util.ReqUtil;
+import com.gocharm.coimotion.apptemplate.ShowListActivity.DropDownListenser;
 
+import android.R.array;
+import android.R.integer;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBar.OnNavigationListener;
 import android.support.v7.app.ActionBarActivity;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
+import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 
 public class DetailActivity extends ActionBarActivity {
@@ -28,11 +38,13 @@ public class DetailActivity extends ActionBarActivity {
 	private ImageButton mapBut;
 	private String lat;
 	private String lng;
+	private String place;
+	private JSONArray showInfo;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_detail);
-		getSupportActionBar().setTitle("¬¡°Ê¸ê°T");
+		getSupportActionBar().setTitle("æ´»å‹•è³‡è¨Š");
 		descTxView = (TextView) findViewById(R.id.descTx);
 		descTxView.setMovementMethod(new ScrollingMovementMethod());
 		
@@ -48,6 +60,7 @@ public class DetailActivity extends ActionBarActivity {
 				intent.setClass(getApplicationContext(), MapActivity.class);
 				intent.putExtra("lat", lat);
 				intent.putExtra("lng", lng);
+				intent.putExtra("here", place);
 				startActivity(intent);
 				
 			}
@@ -64,9 +77,30 @@ public class DetailActivity extends ActionBarActivity {
 				JSONObject valueMap = (JSONObject) result.get("value");
 				Log.i(LOG_TAG, "value: " + valueMap);
 				try {
-					JSONObject showInfo = valueMap.getJSONArray("showInfo").getJSONObject(0);
-					lat = showInfo.getString("latitude");
-					lng = showInfo.getString("longitude");
+					showInfo = valueMap.getJSONArray("showInfo");
+					Log.i(LOG_TAG, "1st: " + showInfo.getJSONObject(0));
+					if(showInfo.length() > 1) {
+						ArrayList<String> dropDown = new ArrayList<String>();
+						
+						for (int i = 0; i < showInfo.length(); i++) {
+							dropDown.add(showInfo.getJSONObject(i).getString("time"));
+						}
+						SpinnerAdapter adapter = ArrayAdapter.createFromResource(getApplicationContext(), R.array.period, android.R.layout.simple_spinner_dropdown_item);
+				        final ActionBar actionBar = getSupportActionBar();
+				        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
+				        actionBar.setListNavigationCallbacks(adapter,new OnNavigationListener() {
+							
+							@Override
+							public boolean onNavigationItemSelected(int arg0, long arg1) {
+								// TODO Auto-generated method stub
+								
+								return false;
+							}
+						});
+					}
+					//lat = showInfo.getString("latitude");
+					//lng = showInfo.getString("longitude");
+					//place = showInfo.getString("placeName");
 					descTxView.setText(valueMap.getString("descTx"));
 					titleView.setText(valueMap.getString("title"));
 				} catch (JSONException e) {

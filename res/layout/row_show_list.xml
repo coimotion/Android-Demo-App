@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="60dp"
+    android:background="@color/ClearColor"
     android:orientation="horizontal" >
 
     <ImageView
@@ -35,6 +36,7 @@
             android:id="@+id/rowSubTitle"
             android:layout_width="match_parent"
             android:layout_height="20dp"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
             android:layout_marginTop="@dimen/abc_dropdownitem_text_padding_left"
             android:text="TextView"
             android:textColor="@color/BlackOak"

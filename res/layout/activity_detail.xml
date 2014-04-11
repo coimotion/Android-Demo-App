@@ -4,14 +4,12 @@
         android:id="@+id/scrollView1"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent" -->
-	<LinearLayout 
-	    
-	    xmlns:android="http://schemas.android.com/apk/res/android"
+	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	    xmlns:tools="http://schemas.android.com/tools"
 	    android:id="@+id/container"
 	    android:layout_width="match_parent"
 	    android:layout_height="match_parent"
-	    android:background="@drawable/bg"
+	    android:background="@color/basic"
 	    android:orientation="vertical"
 	    tools:ignore="MergeRootFrame" >
 

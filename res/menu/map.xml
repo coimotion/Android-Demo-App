@@ -1,12 +1,7 @@
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.gocharm.coimotion.apptemplate.MapActivity" >
-
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
     <item
         android:id="@+id/action_settings"
         android:orderInCategory="100"
-        android:title="@string/action_settings"
-        app:showAsAction="never"/>
-
+        android:showAsAction="always"
+        android:title="@+strings/menu_route"/>
 </menu>

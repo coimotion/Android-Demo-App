@@ -14,5 +14,15 @@
     <string name="title_activity_grid">GridActivity</string>
     <string name="title_activity_detail">DetailActivity</string>
     <string name="title_activity_map">MapActivity</string>
-
+    <string name="title_activity_route_view">RouteViewActivity</string>
+    <string name="title_activity_route">RouteActivity</string>
+	<string name="menu_route">Routes</string>
+	
+	<string-array name="period">
+        <item>一週活動</item>
+        <item>二週活動</item>
+        <item>三週活動</item>
+        <item>四週活動</item>
+    </string-array>
+    
 </resources>

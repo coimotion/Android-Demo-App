@@ -45,7 +45,7 @@ public class GridActivity extends Activity {
 				Log.i("main frag", "tag: " + v.getTag());
 				Intent intent = new Intent();
 				intent.putExtra("catID", v.getTag().toString());
-				intent.setClass(GridActivity.this, MainActivity.class);
+				intent.setClass(GridActivity.this, ShowListActivity.class);
 				startActivity(intent);
 			}
 		};

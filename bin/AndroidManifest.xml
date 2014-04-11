@@ -66,7 +66,7 @@
             android:theme="@android:style/Theme.NoTitleBar" >
         </activity>
         <activity
-            android:name="com.gocharm.coimotion.apptemplate.MainActivity"
+            android:name="com.gocharm.coimotion.apptemplate.ShowListActivity"
             android:label="@string/app_name" >
         </activity>
         <activity
@@ -80,6 +80,14 @@
         <activity
             android:name="com.gocharm.coimotion.apptemplate.MapActivity"
             android:label="@string/title_activity_map" >
+        </activity>
+        <activity
+            android:name="com.gocharm.coimotion.apptemplate.RouteListActivity"
+            android:label="@string/title_activity_route_view" >
+        </activity>
+        <activity
+            android:name="com.gocharm.coimotion.apptemplate.RouteActivity"
+            android:label="@string/title_activity_route" >
         </activity>
     </application>
 
