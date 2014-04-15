@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
     <color name="ClearColor">#00000000</color>
-    <color name="BlackOak">#544a47</color>
-    <color name="DeepBlue">#0f2350</color>
-    <color name="basic">#efebe8</color>
+    <color name="BlackOak">#ff544a47</color>
+    <color name="DeepBlue">#ff0f2350</color>
+    <color name="basic">#ffefebe8</color>
+    <color name="logoColor">#ff26b7aa</color>
+    <color name="goColor">#fef4e0</color>
+    <color name="backColor">#e4f9ed</color>
+    
 </resources>

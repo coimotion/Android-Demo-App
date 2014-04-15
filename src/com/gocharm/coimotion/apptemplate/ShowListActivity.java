@@ -58,7 +58,6 @@ public class ShowListActivity extends ActionBarActivity {
 			@Override
 			public boolean onNavigationItemSelected(int itemPosition, long arg1) {
 				// TODO Auto-generated method stub
-				Log.i(LOG_TAG, "open? " + open);
 	        	if(!open){
 	        		
 		            if(mCurrentMenuItemPosition > -1) {
@@ -80,7 +79,7 @@ public class ShowListActivity extends ActionBarActivity {
 		mDrawerToggle = new ActionBarDrawerToggle(
 	            this, 
 	            mDrawerLayout,    // 讓 Drawer Toggle 知道母體介面是誰
-	            R.drawable.ic_launcher, // Drawer 的 Icon
+	            R.drawable.ic_drawer, // Drawer 的 Icon
 	            R.string.open_left_drawer, // Drawer 被打開時的描述
 	            R.string.close_left_drawer // Drawer 被關閉時的描述
 	            ) {
@@ -126,6 +125,7 @@ public class ShowListActivity extends ActionBarActivity {
 					title = MENU_ITEMS[i];
 					getSupportActionBar().setTitle(MENU_ITEMS[i]);
 					mCurrentMenuItemPosition = i;
+					
 				}
 			}
 			ShowListFrag slFrag = ShowListFrag.newInstance(catID, 0);
@@ -133,7 +133,17 @@ public class ShowListActivity extends ActionBarActivity {
 				.replace(R.id.container, slFrag).commit();
 		}
 		setDrawerMenu();
+		getSupportActionBar().setHomeButtonEnabled(true);
+		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+		
 	}
+	
+	@Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        // Sync the toggle state after onRestoreInstanceState has occurred.
+        mDrawerToggle.syncState();
+    }
 	
 	class DropDownListenser implements OnNavigationListener
     {
@@ -163,7 +173,7 @@ public class ShowListActivity extends ActionBarActivity {
 	    // 定義新宣告的兩個物件：選項清單的 ListView 以及 Drawer內容的 LinearLayou
 	    mLsvDrawerMenu = (ListView) findViewById(R.id.lsv_drawer_menu);
 	    mLlvDrawerContent = (LinearLayout) findViewById(R.id.llv_left_drawer);
-	 
+	    mLsvDrawerMenu.setSelection(mCurrentMenuItemPosition);
 	    // 當清單選項的子物件被點擊時要做的動作
 	    mLsvDrawerMenu.setOnItemClickListener(new OnItemClickListener() {
 	 

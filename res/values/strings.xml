@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">瘋！藝文</string>
+    <string name="app_name">ArtMania</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="open_left_drawer">open drawer</string>
@@ -16,13 +16,15 @@
     <string name="title_activity_map">MapActivity</string>
     <string name="title_activity_route_view">RouteViewActivity</string>
     <string name="title_activity_route">RouteActivity</string>
-	<string name="menu_route">Routes</string>
-	
-	<string-array name="period">
+    <string name="menu_route">Routes</string>
+
+    <string-array name="period">
         <item>一週活動</item>
         <item>二週活動</item>
         <item>三週活動</item>
         <item>四週活動</item>
     </string-array>
-    
+
+    <string name="title_activity_about">AboutActivity</string>
+
 </resources>

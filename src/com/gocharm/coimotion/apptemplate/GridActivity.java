@@ -11,7 +11,7 @@ import android.view.View.OnClickListener;
 import android.widget.ImageButton;
 
 public class GridActivity extends Activity {
-	ImageButton b1, b2, b3, b4, b5, b6, b7, b8, b9;
+	ImageButton b1, b2, b3, b4, b5, b6, b7, b8, b9, infoButton;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +36,8 @@ public class GridActivity extends Activity {
 		b8.setOnClickListener(listener());
 		b9 = (ImageButton) findViewById(R.id.ImageButton9);
 		b9.setOnClickListener(listener());
+		infoButton = (ImageButton) findViewById(R.id.infoBut);
+		infoButton.setOnClickListener(listener());
 	}
 	public OnClickListener listener(){
 		return new OnClickListener() {		
@@ -43,9 +45,15 @@ public class GridActivity extends Activity {
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				Log.i("main frag", "tag: " + v.getTag());
+				String catID = v.getTag().toString();
 				Intent intent = new Intent();
-				intent.putExtra("catID", v.getTag().toString());
-				intent.setClass(GridActivity.this, ShowListActivity.class);
+				if(catID.equalsIgnoreCase("info")) {
+					intent.setClass(GridActivity.this, AboutActivity.class);
+				}
+				else {
+					intent.putExtra("catID", catID);
+					intent.setClass(GridActivity.this, ShowListActivity.class);
+				}
 				startActivity(intent);
 			}
 		};

@@ -1,5 +1,7 @@
 package com.gocharm.coimotion.apptemplate;
 
+import java.io.InputStream;
+import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -19,23 +21,29 @@ import com.coimotion.csdk.util.ReqUtil;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.ClipData.Item;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils.TruncateAt;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.TextView;
 
 public class ShowListFrag extends Fragment {
 	private final static String LOG_TAG = "show list";
 	private static String catID;
 	private ListView mShowList;
 	private static int weeks;
+	private String imgURL;
 	
 	public static ShowListFrag newInstance(String ID, int period){
 		ShowListFrag frag = new ShowListFrag();
@@ -106,14 +114,15 @@ public class ShowListFrag extends Fragment {
 				for(int i = 0; i < arr.length(); i++) {
 					HashMap<String, String> item = new HashMap<String, String>();
 					JSONObject obj;
-					
 					try {
 						obj = (JSONObject) arr.get(i);
+						Log.i(LOG_TAG, "obj: " + obj);
 						if (!title.equals(obj.getString("title"))) {
 							title = obj.getString("title");
 							item.put("title", obj.getString("title"));
 							item.put("placeName", obj.getString("placeName"));
 							item.put("spID", obj.getString("spID"));
+							item.put("imgURL", obj.getString("imgURL"));
 							dataArray.add(item);
 						}
 					} catch (JSONException e) {
@@ -153,5 +162,4 @@ public class ShowListFrag extends Fragment {
 		}
 		super.onDestroy();
 	}
-	
 }

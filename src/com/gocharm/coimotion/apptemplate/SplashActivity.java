@@ -45,7 +45,7 @@ public class SplashActivity extends Activity {
 					JSONObject values = (JSONObject) results.get("value");
 					try {
 						Log.i(LOG_TAG,"dspname: " + values.getString("dspName"));
-						if(values.getString("dspName").equals("Guest")) {
+						if(!values.getString("dspName").equalsIgnoreCase("Guest")) {
 							Intent intent = new Intent();
 							intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 							intent.setClass(SplashActivity.this, GridActivity.class);

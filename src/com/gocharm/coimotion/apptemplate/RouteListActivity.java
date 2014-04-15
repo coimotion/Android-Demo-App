@@ -77,7 +77,8 @@ public class RouteListActivity extends ActionBarActivity {
 						for (int i = 0; i < list.length(); i++) {
 							HashMap<String, String> item = new HashMap<String,String>();
 							item.put("brID", list.getJSONObject(i).getString("brID"));
-							item.put("rtName", list.getJSONObject(i).getString("rtName"));
+							item.put("rtName", list.getJSONObject(i).getString("rtName") + "(" + list.getJSONObject(i).getString("descTx") + ")");
+							//item.put("descTx", list.getJSONObject(i).getString("descTx"));
 							if(!dataArray.contains(item)) {
 								dataArray.add(item);
 							}
@@ -97,8 +98,10 @@ public class RouteListActivity extends ActionBarActivity {
 										public View getView(int position, View convertView, ViewGroup parent) {
 						        			View view = super.getView(position, convertView, parent);
 						        			TextView text1 = (TextView) view.findViewById(android.R.id.text1);
-						        			text1.setTextColor(R.color.BlackOak);
+						        			text1.setTextColor(R.color.DeepBlue);
+						        			view.setBackgroundColor(getResources().getColor(R.color.ClearColor));
 						        			return view;
+						        			
 						        		};
 						    };
 							routeList.setAdapter(adapter);

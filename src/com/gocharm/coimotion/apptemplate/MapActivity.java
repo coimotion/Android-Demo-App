@@ -32,11 +32,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 public class MapActivity extends ActionBarActivity {
 	private static final String LOG_TAG = "mapAct";
 	private static String tsIDs;
-	//private GoogleMap map;
+	private static LinearLayout descView;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +48,8 @@ public class MapActivity extends ActionBarActivity {
 		String placeName;
 		
 		setContentView(R.layout.activity_map);
+		descView = (LinearLayout) findViewById(R.id.descView);
+		
 		android.support.v7.app.ActionBar ab = getSupportActionBar();
 		ab.setTitle("活動地點");
 		
@@ -58,7 +61,6 @@ public class MapActivity extends ActionBarActivity {
 		getSupportActionBar().show();
 		if (savedInstanceState == null) {
 			getSupportFragmentManager().beginTransaction()
-					//.add(R.id.map, new myMapFragment(new LatLng(lat,lng), placeName)).commit();
 			.add(R.id.map, myMapFragment.newInstance(new LatLng(lat, lng), placeName)).commit();
 		}
 	}
@@ -67,7 +69,7 @@ public class MapActivity extends ActionBarActivity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		//getMenuInflater().inflate(R.menu.map, menu);
-		MenuItem route = menu.add(0,111,0,"Routes");
+		MenuItem route = menu.add(0,111,0,"路線列表");
 		
 		route.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
 		return true;
@@ -168,6 +170,7 @@ public class MapActivity extends ActionBarActivity {
 							stopList.put(stop.getId(), stops.getJSONObject(i).getString("tsID"));
 						}
 						tsIDs += "]";
+						descView.bringToFront();
 					} catch (JSONException e) {
 						e.printStackTrace();
 					}

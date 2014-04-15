@@ -1,8 +1,16 @@
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="50dp"
+    android:layout_height="44dp"
     android:orientation="horizontal" >
+
+    <ImageView
+        android:id="@+id/gobackImage"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="@dimen/abc_action_bar_subtitle_bottom_margin"
+        android:src="@drawable/go" />
 
     <TextView
         android:id="@+id/stopText"
