@@ -37,7 +37,7 @@ public class RouteListActivity extends ActionBarActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);		
 		setContentView(R.layout.activity_route_view);
-		getSupportActionBar().setTitle("¸ô½u¦Cªí");
+		getSupportActionBar().setTitle("è·¯ç·šåˆ—è¡¨");
 		routeList = (ListView) findViewById(R.id.routeList);
 		routeList.setOnItemClickListener(new OnItemClickListener() {
 

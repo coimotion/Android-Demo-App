@@ -51,7 +51,7 @@ public class MapActivity extends ActionBarActivity {
 		descView = (LinearLayout) findViewById(R.id.descView);
 		
 		android.support.v7.app.ActionBar ab = getSupportActionBar();
-		ab.setTitle("¬¡°Ê¦aÂI");
+		ab.setTitle("æ´»å‹•åœ°é»ž");
 		
 		lat = Double.parseDouble(getIntent().getExtras().getString("lat"));
 		lng = Double.parseDouble(getIntent().getExtras().getString("lng"));
@@ -69,7 +69,7 @@ public class MapActivity extends ActionBarActivity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		//getMenuInflater().inflate(R.menu.map, menu);
-		MenuItem route = menu.add(0,111,0,"¸ô½u¦Cªí");
+		MenuItem route = menu.add(0,111,0,"è·¯ç·šåˆ—è¡¨");
 		
 		route.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
 		return true;

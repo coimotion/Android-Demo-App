@@ -54,9 +54,9 @@ public class RouteActivity extends ActionBarActivity {
 					for (int i=0; i<list.length();i++) {
 						HashMap<String, String> item = new HashMap<String, String>();
 						String stName = (list.getJSONObject(i).getString("stName") == null)?"":list.getJSONObject(i).getString("stName");
-						String arvTime = (list.getJSONObject(i).has("arvTime"))?list.getJSONObject(i).getString("arvTime"):"µL";
+						String arvTime = (list.getJSONObject(i).has("arvTime"))?list.getJSONObject(i).getString("arvTime"):"ÁÑ°";
 						if (arvTime.equals("")) {
-							arvTime = "•º¥£®—";
+							arvTime = "Êú™Êèê‰æõ";
 						}
 						item.put("stName",  stName);
 						item.put("arvTime", arvTime);

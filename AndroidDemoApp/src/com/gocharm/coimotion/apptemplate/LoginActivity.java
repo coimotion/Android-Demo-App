@@ -51,7 +51,7 @@ public class LoginActivity extends Activity {
 					pDialog = ProgressDialog.show(
 			                  LoginActivity.this,
 			                  "",
-			                  "µn¤J¤¤¡K",
+			                  "ç™»å…¥ä¸­â€¦",
 			                  true
 			                );
 					Map<String, Object> mapParam = new HashMap<String, Object>();
@@ -90,7 +90,7 @@ public class LoginActivity extends Activity {
 					pDialog = ProgressDialog.show(
 			                  LoginActivity.this,
 			                  "",
-			                  "µù¥U¤¤¡K",
+			                  "è¨»å†Šä¸­â€¦",
 			                  true
 			                );
 					Map<String, Object> mapParam = new HashMap<String, Object>();
@@ -139,11 +139,11 @@ public class LoginActivity extends Activity {
 				// TODO Auto-generated method stub
 				if(loginRadio.isChecked()){
 					passwd2Text.setVisibility(View.INVISIBLE);
-					submitBut.setText("µn¤J");
+					submitBut.setText("ç™»å…¥");
 				}
 				if(regRadio.isChecked()){
 					passwd2Text.setVisibility(View.VISIBLE);
-					submitBut.setText("µù¥U");
+					submitBut.setText("è¨»å†Š");
 				}
 			}
 		});
