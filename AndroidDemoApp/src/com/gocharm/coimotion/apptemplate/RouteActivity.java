@@ -13,23 +13,15 @@ import com.coimotion.csdk.common.COIMCallListener;
 import com.coimotion.csdk.util.ReqUtil;
 
 import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.ActionBar;
-import android.support.v4.app.Fragment;
-import android.R.array;
 import android.annotation.SuppressLint;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
-import android.os.Build;
 
 public class RouteActivity extends ActionBarActivity {
 	private static final String LOG_TAG = "routeInfo";
@@ -80,14 +72,14 @@ public class RouteActivity extends ActionBarActivity {
 			        			text2.setTextColor(R.color.BlackOak);
 			        			ImageView gobackImg = (ImageView) view.findViewById(R.id.gobackImage);
 			        			if(dataArray.get(position).get("isInBd").equals("0")) {
-			        				Log.i(LOG_TAG,"go");
 			        				gobackImg.setImageResource(R.drawable.go);
-			        				view.setBackgroundColor(getResources().getColor(R.color.goColor));
+			        				//view.setBackgroundColor(getResources().getColor(R.color.goColor));
+			        				view.setBackgroundResource(R.drawable.bg_green);
 			        			}
 			        			else {
-			        				Log.i(LOG_TAG,"back");
 			        				gobackImg.setImageResource(R.drawable.back);
-			        				view.setBackgroundColor(getResources().getColor(R.color.backColor));
+			        				//view.setBackgroundColor(getResources().getColor(R.color.backColor));
+			        				view.setBackgroundResource(R.drawable.bg_pink);
 			        			}
 			        			return view;
 

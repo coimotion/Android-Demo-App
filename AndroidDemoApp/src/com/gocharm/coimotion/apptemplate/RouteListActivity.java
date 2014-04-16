@@ -1,6 +1,7 @@
 package com.gocharm.coimotion.apptemplate;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -11,14 +12,17 @@ import org.json.JSONObject;
 
 import com.coimotion.csdk.common.COIMCallListener;
 import com.coimotion.csdk.util.ReqUtil;
+import com.gocharm.coimotion.apptemplate.R.drawable;
 
 import android.support.v7.app.ActionBarActivity;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
@@ -94,12 +98,17 @@ public class RouteListActivity extends ActionBarActivity {
 										new String[]{"rtName"}, 
 										new int[]{android.R.id.text1}){
 
-						        		@SuppressLint({ "ResourceAsColor", "NewApi" })
+						        		@SuppressLint("ResourceAsColor")
 										public View getView(int position, View convertView, ViewGroup parent) {
 						        			View view = super.getView(position, convertView, parent);
 						        			TextView text1 = (TextView) view.findViewById(android.R.id.text1);
 						        			text1.setTextColor(R.color.DeepBlue);
-						        			view.setBackgroundColor(getResources().getColor(R.color.ClearColor));
+						        			//view.setBackgroundColor(getResources().getColor(R.color.ClearColor));
+						        			view.setBackgroundResource(R.drawable.bg_pink);
+						        			//LayoutParams lp = view.getLayoutParams();
+						        			//DisplayMetrics dm = getResources().getDisplayMetrics();
+						        			
+						        			//view.setLayoutParams(new LayoutParams(lp.width, (int)(50 * dm.density)));
 						        			return view;
 						        			
 						        		};

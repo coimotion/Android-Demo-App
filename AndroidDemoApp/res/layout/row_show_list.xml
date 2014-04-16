@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="60dp"
     android:layout_marginRight="@dimen/abc_dropdownitem_text_padding_left"
-    android:background="@color/ClearColor"
+    android:background="@drawable/list_bg"
     android:orientation="horizontal" >
 
     <ImageView
