@@ -153,10 +153,10 @@
         <TextView
             android:id="@+id/showAddr"
             android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
+            android:layout_height="66dp"
             android:layout_gravity="center"
             android:layout_weight="9"
-            android:gravity="top|left" 
+            android:gravity="top|left"
             android:lineSpacingExtra="2dp" />
 
         <ImageButton
