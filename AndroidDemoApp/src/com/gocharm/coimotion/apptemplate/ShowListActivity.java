@@ -1,5 +1,8 @@
 package com.gocharm.coimotion.apptemplate;
 
+import com.coimotion.csdk.common.COIMException;
+import com.coimotion.csdk.util.ReqUtil;
+
 import android.R.layout;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
@@ -41,6 +44,12 @@ public class ShowListActivity extends ActionBarActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		try {
+			ReqUtil.initSDK(getApplication());
+		} catch (COIMException e) {
+		} catch (Exception e) {
+		}
+		
 		setContentView(R.layout.activity_main);
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.drw_layout);
 	    // 設定 Drawer 的影子

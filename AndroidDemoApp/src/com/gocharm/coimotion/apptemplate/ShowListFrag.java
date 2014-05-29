@@ -100,14 +100,11 @@ public class ShowListFrag extends Fragment {
 			
 			@Override
 			public void onSuccess(Map<String, Object> result) {
-				// TODO Auto-generated method stub
 				Log.i(LOG_TAG, "success");
 				JSONArray arr= new JSONArray();
 				try {
 					arr = ((new JSONObject(result)).getJSONObject("value")).getJSONArray("list");
 				} catch (JSONException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
 				}
 				
 				String title = "";
@@ -126,8 +123,6 @@ public class ShowListFrag extends Fragment {
 							dataArray.add(item);
 						}
 					} catch (JSONException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
 					}					
 				}
 				adapter = new SimpleAdapter(
@@ -140,14 +135,7 @@ public class ShowListFrag extends Fragment {
 			}
 			
 			@Override
-			public void onProgress(Integer progress) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
 			public void onFail(HttpResponse response, Exception ex) {
-				// TODO Auto-generated method stub
 				Log.i(LOG_TAG, "fail");
 			}
 		});
@@ -155,7 +143,6 @@ public class ShowListFrag extends Fragment {
 
 	@Override
 	public void onDestroy() {
-		// TODO Auto-generated method stub
 		Log.i(LOG_TAG, "on destroy");
 		if(task != null) {
 			task.cancel(true);

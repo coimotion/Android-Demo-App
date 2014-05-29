@@ -10,6 +10,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.coimotion.csdk.common.COIMCallListener;
+import com.coimotion.csdk.common.COIMException;
 import com.coimotion.csdk.util.ReqUtil;
 
 import android.support.v7.app.ActionBarActivity;
@@ -32,6 +33,12 @@ public class RouteActivity extends ActionBarActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		try {
+			ReqUtil.initSDK(getApplication());
+		} catch (COIMException e) {
+		} catch (Exception e) {
+		}
+		
 		setContentView(R.layout.activity_route);
 		
 		stopList = (ListView) findViewById(R.id.stopList);

@@ -7,5 +7,6 @@
     <color name="logoColor">#ff26b7aa</color>
     <color name="goColor">#fef4e0</color>
     <color name="backColor">#e4f9ed</color>
-    
+    <color name="markerRed">#d3381c</color>
+    <color name="markerBlue">#2ca9e1</color>
 </resources>

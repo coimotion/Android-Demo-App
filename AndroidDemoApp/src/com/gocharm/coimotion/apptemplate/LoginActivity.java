@@ -6,6 +6,7 @@ import java.util.Map;
 import org.apache.http.HttpResponse;
 
 import com.coimotion.csdk.common.COIMCallListener;
+import com.coimotion.csdk.common.COIMException;
 import com.coimotion.csdk.util.ReqUtil;
 
 import android.app.Activity;
@@ -23,29 +24,35 @@ import android.widget.RadioGroup.OnCheckedChangeListener;
 
 public class LoginActivity extends Activity {
 	private static final String LOG_TAG = "loginActivity";
-	private EditText accNameText;
-	private EditText passwdText;
-	private EditText passwd2Text;
+	
+	private EditText accNameText,
+					 passwdText,
+				     passwd2Text;
 	private Button submitBut;
-	private RadioButton loginRadio;
-	private RadioButton regRadio;
+	private RadioButton loginRadio,
+						regRadio;
 	private RadioGroup radioGroup;
 	private ProgressDialog pDialog;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		try {
+			ReqUtil.initSDK(getApplication());
+		} catch (COIMException e) {
+		} catch (Exception e) {
+		}
+		
 		setContentView(R.layout.activity_login);
 		
 		accNameText = (EditText) findViewById(R.id.accName);
 		passwdText = (EditText) findViewById(R.id.passwd);
 		passwd2Text = (EditText) findViewById(R.id.passwd2);
 		submitBut = (Button) findViewById(R.id.submitBut);
-		
 		submitBut.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
 				if(loginRadio.isChecked()){
 					Log.i(LOG_TAG, "login mode");
 					pDialog = ProgressDialog.show(
@@ -61,7 +68,6 @@ public class LoginActivity extends Activity {
 						
 						@Override
 						public void onSuccess(Map<String, Object> result) {
-							// TODO Auto-generated method stub
 							Log.i(LOG_TAG, "success\n" + result);
 							pDialog.dismiss();
 							Intent intent = new Intent();
@@ -72,14 +78,7 @@ public class LoginActivity extends Activity {
 						}
 						
 						@Override
-						public void onProgress(Integer progress) {
-							// TODO Auto-generated method stub
-							
-						}
-						
-						@Override
 						public void onFail(HttpResponse response, Exception ex) {
-							// TODO Auto-generated method stub
 							Log.i(LOG_TAG, "fail\n" + ex.getLocalizedMessage());
 							pDialog.dismiss();
 						}
@@ -101,7 +100,6 @@ public class LoginActivity extends Activity {
 						
 						@Override
 						public void onSuccess(Map<String, Object> result) {
-							// TODO Auto-generated method stub
 							Log.i(LOG_TAG, "success\n" + result);
 							pDialog.dismiss();
 							Intent intent = new Intent();
@@ -109,12 +107,6 @@ public class LoginActivity extends Activity {
 							intent.setClass(LoginActivity.this, GridActivity.class);
 							startActivity(intent);
 							finish();
-						}
-						
-						@Override
-						public void onProgress(Integer progress) {
-							// TODO Auto-generated method stub
-							
 						}
 						
 						@Override
@@ -130,13 +122,12 @@ public class LoginActivity extends Activity {
 		
 		loginRadio = (RadioButton) findViewById(R.id.loginRadio);
 		regRadio = (RadioButton) findViewById(R.id.regRadio);
-		radioGroup = (RadioGroup) findViewById(R.id.radioGroup1);
 		
+		radioGroup = (RadioGroup) findViewById(R.id.radioGroup1);
 		radioGroup.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 			
 			@Override
 			public void onCheckedChanged(RadioGroup group, int checkedId) {
-				// TODO Auto-generated method stub
 				if(loginRadio.isChecked()){
 					passwd2Text.setVisibility(View.INVISIBLE);
 					submitBut.setText("登入");

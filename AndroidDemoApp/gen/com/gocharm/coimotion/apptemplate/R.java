@@ -953,7 +953,7 @@ containing a value of this type.
         public static final int BlackOak=0x7f05000e;
         public static final int ClearColor=0x7f05000d;
         public static final int DeepBlue=0x7f05000f;
-        public static final int abc_search_url_text_holo=0x7f050014;
+        public static final int abc_search_url_text_holo=0x7f050016;
         public static final int abc_search_url_text_normal=0x7f05000a;
         public static final int abc_search_url_text_pressed=0x7f05000c;
         public static final int abc_search_url_text_selected=0x7f05000b;
@@ -971,10 +971,12 @@ containing a value of this type.
         public static final int common_signin_btn_light_text_disabled=0x7f050006;
         public static final int common_signin_btn_light_text_focused=0x7f050007;
         public static final int common_signin_btn_light_text_pressed=0x7f050005;
-        public static final int common_signin_btn_text_dark=0x7f050015;
-        public static final int common_signin_btn_text_light=0x7f050016;
+        public static final int common_signin_btn_text_dark=0x7f050017;
+        public static final int common_signin_btn_text_light=0x7f050018;
         public static final int goColor=0x7f050012;
         public static final int logoColor=0x7f050011;
+        public static final int markerBlue=0x7f050015;
+        public static final int markerRed=0x7f050014;
     }
     public static final class dimen {
         /**  Default height of an action bar. 

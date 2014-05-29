@@ -137,7 +137,7 @@ int bool abc_split_action_bar_is_narrow 0x7f090002
 int color BlackOak 0x7f05000e
 int color ClearColor 0x7f05000d
 int color DeepBlue 0x7f05000f
-int color abc_search_url_text_holo 0x7f050014
+int color abc_search_url_text_holo 0x7f050016
 int color abc_search_url_text_normal 0x7f05000a
 int color abc_search_url_text_pressed 0x7f05000c
 int color abc_search_url_text_selected 0x7f05000b
@@ -153,10 +153,12 @@ int color common_signin_btn_light_text_default 0x7f050004
 int color common_signin_btn_light_text_disabled 0x7f050006
 int color common_signin_btn_light_text_focused 0x7f050007
 int color common_signin_btn_light_text_pressed 0x7f050005
-int color common_signin_btn_text_dark 0x7f050015
-int color common_signin_btn_text_light 0x7f050016
+int color common_signin_btn_text_dark 0x7f050017
+int color common_signin_btn_text_light 0x7f050018
 int color goColor 0x7f050012
 int color logoColor 0x7f050011
+int color markerBlue 0x7f050015
+int color markerRed 0x7f050014
 int dimen abc_action_bar_default_height 0x7f0a0002
 int dimen abc_action_bar_icon_vertical_padding 0x7f0a0003
 int dimen abc_action_bar_progress_bar_size 0x7f0a000a

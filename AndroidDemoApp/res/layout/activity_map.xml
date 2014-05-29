@@ -9,8 +9,7 @@
         android:id="@+id/descView"
         android:layout_width="111dp"
         android:layout_height="64dp"
-        android:layout_gravity="bottom|left"
-        android:layout_marginTop="@dimen/abc_dropdownitem_text_padding_left"
+        android:layout_marginTop="@dimen/abc_action_button_min_width"
         android:background="@color/basic"
         android:orientation="vertical" >
 
@@ -24,7 +23,7 @@
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_marginLeft="@dimen/abc_dropdownitem_text_padding_left"
-                android:background="@color/goColor" />
+                android:background="@color/markerRed" />
 
             <TextView
                 android:id="@+id/textView1"
@@ -34,7 +33,6 @@
                 android:layout_marginLeft="@dimen/abc_dropdownitem_text_padding_right"
                 android:text="活動地點"
                 android:textSize="@dimen/activity_vertical_margin" />
-
         </LinearLayout>
 
         <LinearLayout
@@ -48,7 +46,7 @@
                 android:layout_height="20dp"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="@dimen/abc_dropdownitem_text_padding_right"
-                android:background="@color/backColor" />
+                android:background="@color/markerBlue" />
 
             <TextView
                 android:id="@+id/textView2"
@@ -58,9 +56,7 @@
                 android:layout_marginLeft="@dimen/abc_dropdownitem_text_padding_right"
                 android:text="公車站牌"
                 android:textSize="@dimen/activity_vertical_margin" />
-
         </LinearLayout>
-
     </LinearLayout>
 
 </FrameLayout>

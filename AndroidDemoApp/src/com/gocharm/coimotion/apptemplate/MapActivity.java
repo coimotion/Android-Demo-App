@@ -9,6 +9,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.coimotion.csdk.common.COIMCallListener;
+import com.coimotion.csdk.common.COIMException;
 import com.coimotion.csdk.util.ReqUtil;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -41,8 +42,13 @@ public class MapActivity extends ActionBarActivity {
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		Log.i(LOG_TAG, "activity on create");
 		super.onCreate(savedInstanceState);
+		try {
+			ReqUtil.initSDK(getApplication());
+		} catch (COIMException e) {
+		} catch (Exception e) {
+		}
+		
 		double lat;
 		double lng;
 		String placeName;
@@ -57,29 +63,22 @@ public class MapActivity extends ActionBarActivity {
 		lng = Double.parseDouble(getIntent().getExtras().getString("lng"));
 		placeName = getIntent().getExtras().getString("here");
 		ab.setSubtitle(placeName);
-		Log.i(LOG_TAG, "(lat, lng) = (" + lat + ", " + lng + ")");
-		getSupportActionBar().show();
+
 		if (savedInstanceState == null) {
 			getSupportFragmentManager().beginTransaction()
 			.add(R.id.map, myMapFragment.newInstance(new LatLng(lat, lng), placeName)).commit();
 		}
 	}
 	
-	@SuppressLint("NewApi")
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		//getMenuInflater().inflate(R.menu.map, menu);
 		MenuItem route = menu.add(0,111,0,"路線列表");
-		
 		route.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
 		return true;
 	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle action bar item clicks here. The action bar will
-		// automatically handle clicks on the Home/Up button, so long
-		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
 		Log.i(LOG_TAG, "tsIDs: " + tsIDs);
 		if (id == 111) {
@@ -92,7 +91,6 @@ public class MapActivity extends ActionBarActivity {
 		return super.onOptionsItemSelected(item);
 	}
 	
-	@SuppressLint("ValidFragment")
 	public static class myMapFragment extends SupportMapFragment {
 		private static final String LOG_TAG = "mapFragment";
 	    private GoogleMap mapView;
@@ -122,14 +120,8 @@ public class MapActivity extends ActionBarActivity {
 	    public View onCreateView(LayoutInflater mInflater, ViewGroup arg1, Bundle arg2) {
 	    	Log.i(LOG_TAG, "fragment on create view");
 	        View view = super.onCreateView(mInflater, arg1, arg2);
-	        
+	        descView.bringToFront();
 	        return view;
-	    }
-
-	    @Override
-	    public void onInflate(Activity arg0, AttributeSet arg1, Bundle arg2) {
-	        super.onInflate(arg0, arg1, arg2);
-	        Log.i(LOG_TAG, "fragment on inflate");
 	    }
 
 	    @Override
@@ -145,7 +137,6 @@ public class MapActivity extends ActionBarActivity {
 				
 				@Override
 				public void onSuccess(Map<String, Object> result) {
-					// TODO Auto-generated method stub
 					JSONObject value = (JSONObject) result.get("value");
 					try {
 						JSONArray stops = value.getJSONArray("list");
@@ -162,9 +153,9 @@ public class MapActivity extends ActionBarActivity {
 							double sLat = stops.getJSONObject(i).getDouble("latitude");
 							double sLng = stops.getJSONObject(i).getDouble("longitude");
 							Marker stop= mapView.addMarker(new MarkerOptions()
-							.position(new LatLng(sLat, sLng))
-							.title(title)
-							.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
+											.position(new LatLng(sLat, sLng))
+											.title(title)
+											.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
 							//save to array
 							item.put("title", title);
 							stopList.put(stop.getId(), stops.getJSONObject(i).getString("tsID"));
@@ -172,19 +163,15 @@ public class MapActivity extends ActionBarActivity {
 						tsIDs += "]";
 						descView.bringToFront();
 					} catch (JSONException e) {
-						e.printStackTrace();
 					}
 				}
-				
-				@Override
-				public void onProgress(Integer progress) {
-				}
-				
+								
 				@Override
 				public void onFail(HttpResponse response, Exception ex) {
 					Log.i(LOG_TAG, "ex: " + ex.getLocalizedMessage());
 				}
 			});
+	        
 	        mapView = getMap();
 	        mapView.moveCamera(CameraUpdateFactory.newLatLngZoom(destination, 16));
 	        final Marker here= mapView.addMarker(new MarkerOptions().position(destination).title(place));
@@ -235,4 +222,5 @@ public class MapActivity extends ActionBarActivity {
 			});	        
 	    }
 	}
+
 }

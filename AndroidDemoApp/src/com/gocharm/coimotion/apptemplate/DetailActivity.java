@@ -9,6 +9,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.coimotion.csdk.common.COIMCallListener;
+import com.coimotion.csdk.common.COIMException;
 import com.coimotion.csdk.util.ReqUtil;
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -33,29 +34,37 @@ import android.widget.TextView;
 public class DetailActivity extends ActionBarActivity {
 	private static final String LOG_TAG = "detailAct";
 	
-	private TextView descTxView;
-	private TextView titleView;
-	private TextView showAddrView;
-	private TextView showPriceView;
-	private TextView showTimeView;
-	private TextView showPeriodView;
-	private TextView showOrgView;
-	private TextView infoSrcView;
-	private ImageButton buyBut;
-	private ImageButton mapBut;
-	private String lat;
-	private String lng;
-	private String place;
-	private JSONArray showInfo;
-	private String saleURL;
-	private ImageView descTxScrollImage;
-	private ImageView showPriceScrollImage;
-
+	private TextView descTxView, 
+					 titleView,				 
+					 showAddrView,
+					 showPriceView,
+					 showTimeView,
+					 showPeriodView,
+					 showOrgView,
+					 infoSrcView;
 	
-	@SuppressLint("CutPasteId")
+	private ImageButton	buyBut,
+						mapBut;
+	
+	private String lat,
+				   lng,
+				   place,
+				   saleURL;
+	
+	private JSONArray showInfo;
+	
+	private ImageView descTxScrollImage,
+					  showPriceScrollImage;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		try {
+			ReqUtil.initSDK(getApplication());
+		} catch (COIMException e) {
+		} catch (Exception e) {
+		}
+		
 		setContentView(R.layout.activity_detail);
 		getSupportActionBar().setTitle("活動資訊");
 		
@@ -83,9 +92,6 @@ public class DetailActivity extends ActionBarActivity {
 		
 		titleView = (TextView) findViewById(R.id.title);
 		
-		//freeImage = (ImageView) findViewById(R.id.logo);
-		//freeImage.setVisibility(View.INVISIBLE);
-		
 		mapBut = (ImageButton) findViewById(R.id.mapButton);
 		mapBut.setOnClickListener(new OnClickListener() {
 			
@@ -111,9 +117,9 @@ public class DetailActivity extends ActionBarActivity {
 		});
 		
 		String spID = getIntent().getExtras().getString("spID");
+		
 		ReqUtil.send("twShow/show/info/" + spID, null, new COIMCallListener() {
 			
-			@SuppressLint("NewApi")
 			@Override
 			public void onSuccess(Map<String, Object> result) {
 				JSONObject valueMap = (JSONObject) result.get("value");
@@ -219,6 +225,7 @@ public class DetailActivity extends ActionBarActivity {
 							}
 						});
 					}
+					
 					lat = showInfo.getJSONObject(0).getString("latitude");
 					lng = showInfo.getJSONObject(0).getString("longitude");
 					place = showInfo.getJSONObject(0).getString("placeName");

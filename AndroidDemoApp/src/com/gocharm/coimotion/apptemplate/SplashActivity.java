@@ -28,11 +28,7 @@ public class SplashActivity extends Activity {
 		try {
 			ReqUtil.initSDK(getApplication());
 		} catch (COIMException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
 		
 		ReqUtil.send(checkTokenURL, null, new COIMCallListener() {
