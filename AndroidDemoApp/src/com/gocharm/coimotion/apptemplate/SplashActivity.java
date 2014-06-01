@@ -17,7 +17,7 @@ import android.util.Log;
 
 public class SplashActivity extends Activity {
 	private final static String LOG_TAG = "splash";
-	private final static String checkTokenURL = "go4art/account/profile";
+	private final static String checkTokenURL = "core/user/profile";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
