@@ -33,17 +33,23 @@ public class RouteActivity extends ActionBarActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_route);
 		try {
 			ReqUtil.initSDK(getApplication());
 		} catch (COIMException e) {
 		} catch (Exception e) {
 		}
-		
-		setContentView(R.layout.activity_route);
+		String brID = "";
+		if(savedInstanceState == null) {
+			brID = getIntent().getExtras().getString("brID");
+		}
+		else {
+			brID = savedInstanceState.getString("brID");
+		}
 		
 		stopList = (ListView) findViewById(R.id.stopList);
 		getSupportActionBar().setTitle(getIntent().getExtras().getString("title"));
-		ReqUtil.send("twCtBus/busRoute/next/" + getIntent().getExtras().getString("brID"), null, new COIMCallListener() {
+		ReqUtil.send("twCtBus/busRoute/next/" + brID, null, new COIMCallListener() {
 			@Override
 			public void onSuccess(Map<String, Object> result) {
 				// TODO Auto-generated method stub
@@ -118,5 +124,10 @@ public class RouteActivity extends ActionBarActivity {
 		});
 	}
 	
-
+	@Override
+	protected void onSaveInstanceState(Bundle outState) {
+		// TODO Auto-generated method stub
+		outState.putString("brID", getIntent().getExtras().getString("brID"));
+		super.onSaveInstanceState(outState);
+	}
 }

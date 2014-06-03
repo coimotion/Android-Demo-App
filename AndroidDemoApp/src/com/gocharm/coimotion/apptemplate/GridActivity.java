@@ -20,6 +20,14 @@ public class GridActivity extends Activity {
 						b9, 
 						infoButton;
 	
+	
+	@Override
+	public void onBackPressed() {
+		// TODO Auto-generated method stub
+		super.onBackPressed();
+		getApplication().getSharedPreferences("artMania", 0).edit().putBoolean("closeApp", true).commit();
+	}
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -59,7 +67,6 @@ public class GridActivity extends Activity {
 	private OnClickListener listener = new OnClickListener(){	
 		@Override
 		public void onClick(View v) {
-			Log.i("main frag", "tag: " + v.getTag());
 			String catID = v.getTag().toString();
 			Intent intent = new Intent();
 			if(catID.equalsIgnoreCase("info")) {

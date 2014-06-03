@@ -1,15 +1,11 @@
 package com.gocharm.coimotion.apptemplate;
 
-import java.io.InputStream;
-import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-
-import javax.net.ssl.HttpsURLConnection;
 
 import org.apache.http.HttpResponse;
 import org.json.JSONArray;
@@ -21,12 +17,9 @@ import com.coimotion.csdk.util.ReqUtil;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.content.ClipData.Item;
-import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.text.TextUtils.TruncateAt;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,14 +29,13 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.TextView;
 
 public class ShowListFrag extends Fragment {
 	private final static String LOG_TAG = "show list";
 	private static String catID;
 	private ListView mShowList;
+	private ImageView mNothingImage;
 	private static int weeks;
-	private String imgURL;
 	
 	public static ShowListFrag newInstance(String ID, int period){
 		ShowListFrag frag = new ShowListFrag();
@@ -61,22 +53,10 @@ public class ShowListFrag extends Fragment {
 			Bundle savedInstanceState) {
 		View rootView = inflater.inflate(R.layout.fragment_show_list, container,
 				false);
-		
-		return rootView;
-	}
-	@SuppressLint("SimpleDateFormat")
-	@Override
-	public void onViewCreated(View view, Bundle savedInstanceState) {
-		super.onViewCreated(view, savedInstanceState);
-		Log.i(LOG_TAG,"catID: " + catID);
-		Log.i(LOG_TAG,"weeks: " + weeks);
-		mShowList = (ListView) view.findViewById(R.id.showList);
+		mShowList = (ListView) rootView.findViewById(R.id.showList);
 		mShowList.setOnItemClickListener(new OnItemClickListener() {
-			 
 	        @Override
-	        public void onItemClick(AdapterView<?> parent, View view,
-	                int position, long id) {
-	            Log.i(LOG_TAG, "click on " + position);
+	        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 	            String spID = (String)dataArray.get(position).get("spID");
 	            Intent intent = new Intent();
 				intent.putExtra("spID", spID);
@@ -84,6 +64,15 @@ public class ShowListFrag extends Fragment {
 				startActivity(intent);
 	        }
 	    });
+		mNothingImage = (ImageView) rootView.findViewById(R.id.nothingImg);
+		
+		return rootView;
+	}
+	@SuppressLint("SimpleDateFormat")
+	@Override
+	public void onViewCreated(View view, Bundle savedInstanceState) {
+		super.onViewCreated(view, savedInstanceState);
+		
 		Date now = new Date(System.currentTimeMillis());
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 		Log.i(LOG_TAG, " now " + formatter.format(now));
@@ -107,36 +96,52 @@ public class ShowListFrag extends Fragment {
 				} catch (JSONException e) {
 				}
 				
-				String title = "";
-				for(int i = 0; i < arr.length(); i++) {
-					HashMap<String, String> item = new HashMap<String, String>();
-					JSONObject obj;
-					try {
-						obj = (JSONObject) arr.get(i);
-						Log.i(LOG_TAG, "obj: " + obj);
-						if (!title.equals(obj.getString("title"))) {
-							title = obj.getString("title");
-							item.put("title", obj.getString("title"));
-							item.put("placeName", obj.getString("placeName"));
-							item.put("spID", obj.getString("spID"));
-							item.put("imgURL", obj.getString("imgURL"));
-							dataArray.add(item);
-						}
-					} catch (JSONException e) {
-					}					
+				if (arr.length() == 0) {
+					mNothingImage.setVisibility(View.VISIBLE);
+					mShowList.setVisibility(View.INVISIBLE);
 				}
-				adapter = new SimpleAdapter(
-						getActivity().getApplicationContext(), 
-						dataArray, R.layout.row_show_list, 
-						new String[]{"title", "placeName"}, 
-						new int[]{R.id.rowTitle, R.id.rowSubTitle});
-				
-				mShowList.setAdapter(adapter);
+				else {
+					String title = "";
+					for(int i = 0; i < arr.length(); i++) {
+						HashMap<String, String> item = new HashMap<String, String>();
+						JSONObject obj;
+						try {
+							obj = (JSONObject) arr.get(i);
+							Log.i(LOG_TAG, "obj: " + obj);
+							if (!title.equals(obj.getString("title"))) {
+								title = obj.getString("title");
+								item.put("title", obj.getString("title"));
+								item.put("placeName", obj.getString("placeName"));
+								item.put("spID", obj.getString("spID"));
+								item.put("imgURL", obj.getString("imgURL"));
+								dataArray.add(item);
+							}
+						} catch (JSONException e) {
+						}					
+					}
+					adapter = new SimpleAdapter(
+							getActivity().getApplicationContext(), 
+							dataArray, R.layout.row_show_list, 
+							new String[]{"title", "placeName"}, 
+							new int[]{R.id.rowTitle, R.id.rowSubTitle});
+					
+					mShowList.setAdapter(adapter);
+					mNothingImage.setVisibility(View.INVISIBLE);
+					mShowList.setVisibility(View.VISIBLE);
+				}
 			}
 			
 			@Override
 			public void onFail(HttpResponse response, Exception ex) {
 				Log.i(LOG_TAG, "fail");
+			}
+			
+			@Override
+			public void onInvalidToken() {
+				super.onInvalidToken();
+				getActivity().getApplication().getSharedPreferences("artMania", 0).edit().putBoolean("logout", true).commit();
+				Intent intent = new Intent(getActivity().getApplicationContext(), SplashActivity.class);
+				startActivity(intent);
 			}
 		});
 	}

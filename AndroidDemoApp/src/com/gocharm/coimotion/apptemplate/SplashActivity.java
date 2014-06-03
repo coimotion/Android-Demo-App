@@ -12,6 +12,7 @@ import com.coimotion.csdk.util.ReqUtil;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -19,61 +20,72 @@ public class SplashActivity extends Activity {
 	private final static String LOG_TAG = "splash";
 	private final static String checkTokenURL = "core/user/profile";
 
+	private SharedPreferences pref;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_splash);
-		
+		//初始化COIMOTION SDK
 		try {
 			ReqUtil.initSDK(getApplication());
 		} catch (COIMException e) {
 		} catch (Exception e) {
 		}
-		
-		ReqUtil.send(checkTokenURL, null, new COIMCallListener() {
-			
-			@Override
-			public void onSuccess(Map<String, Object> results) {
-				// TODO Auto-generated method stub
-				Log.i(LOG_TAG, "" + results);
-				//if (results.get("errCode").equals("0")) {
-					JSONObject values = (JSONObject) results.get("value");
-					try {
-						Log.i(LOG_TAG,"dspname: " + values.getString("dspName"));
-						if(!values.getString("dspName").equalsIgnoreCase("Guest")) {
-							Intent intent = new Intent();
-							intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-							intent.setClass(SplashActivity.this, GridActivity.class);
-							startActivity(intent);
-							finish();
-						}
-						else {
-							Intent intent = new Intent();
-							intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-							intent.setClass(SplashActivity.this, LoginActivity.class);
-							startActivity(intent);
-							finish();
-						}
-					} catch (JSONException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					
-				//}
-			}
-			
-			@Override
-			public void onProgress(Integer arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void onFail(HttpResponse arg0, Exception arg1) {
-				// TODO Auto-generated method stub
-				Log.i(LOG_TAG, "err: " + arg1.getLocalizedMessage());
-			}
-		});
+		pref = getApplication().getSharedPreferences("artMania", 0);
 	}
+	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		if(pref.getBoolean("closeApp", false)) {
+			pref.edit().remove("closeApp").commit();
+			finish();
+		}
+		else {
+			if(pref.getBoolean("logout", false)) {
+				pref.edit().remove("logout").commit();
+				Intent intent = new Intent();
+				intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+				intent.setClass(SplashActivity.this, LoginActivity.class);
+				startActivity(intent);
+			}
+			else {
+				// 透過API檢查token是否合法
+				ReqUtil.send(checkTokenURL, null, new COIMCallListener() {		
+					@Override
+					public void onSuccess(Map<String, Object> results) {
+						//API成功回傳
+						JSONObject values = (JSONObject) results.get("value");
+						try {
+							//如果有附合法的token，dspName會回傳該token擁有者的dspName，否則dspName會是Guest
+							if(!values.getString("dspName").equalsIgnoreCase("Guest")) {
+								Intent intent = new Intent();
+								intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+								intent.setClass(SplashActivity.this, GridActivity.class);
+								startActivity(intent);
+							}
+							else {
+								Intent intent = new Intent();
+								intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+								intent.setClass(SplashActivity.this, LoginActivity.class);
+								startActivity(intent);
+							}
+						} catch (JSONException e) {
+						}
+					}
+									
+					@Override
+					public void onFail(HttpResponse arg0, Exception arg1) {
+						Log.i(LOG_TAG, "err: " + arg1.getLocalizedMessage());
+						Intent intent = new Intent();
+						intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+						intent.setClass(SplashActivity.this, LoginActivity.class);
+						startActivity(intent);
+					}
+				});
+			}
+		}
+	}
+	
 }

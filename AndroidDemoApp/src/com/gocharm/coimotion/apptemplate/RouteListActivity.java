@@ -17,6 +17,9 @@ import com.gocharm.coimotion.apptemplate.R.drawable;
 
 import android.support.v7.app.ActionBarActivity;
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
@@ -61,7 +64,15 @@ public class RouteListActivity extends ActionBarActivity {
 				startActivity(intent);
 			}
 		});
-		String tsIDStr = getIntent().getExtras().getString("tsIDs");
+		String tsIDStr = "";
+		
+		if(savedInstanceState != null) {
+			tsIDStr = savedInstanceState.getString("tsIDs");
+		}
+		else {
+			tsIDStr = getIntent().getExtras().getString("tsIDs");
+		}
+		
 		try {
 			tsIDs = new JSONArray(tsIDStr);
 			nStop = tsIDs.length();
@@ -72,13 +83,18 @@ public class RouteListActivity extends ActionBarActivity {
 		
 	}
 
+	@Override
+	protected void onSaveInstanceState(Bundle outState) {
+		outState.putString("tsIDs", getIntent().getExtras().getString("tsIDs"));
+		super.onSaveInstanceState(outState);
+	}
+	
 	private void queryRoutes(final int index){
 		try {
 			ReqUtil.send("twCtBus/busStop/routes/" + tsIDs.getString(index) , null, new COIMCallListener() {
 				
 				@Override
 				public void onSuccess(Map<String, Object> result) {
-					// TODO Auto-generated method stub
 					Log.i(LOG_TAG, "result: " + result);
 					JSONObject value = (JSONObject) result.get("value");
 					JSONArray list;
@@ -109,36 +125,31 @@ public class RouteListActivity extends ActionBarActivity {
 						        			View view = super.getView(position, convertView, parent);
 						        			TextView text1 = (TextView) view.findViewById(android.R.id.text1);
 						        			text1.setTextColor(R.color.DeepBlue);
-						        			//view.setBackgroundColor(getResources().getColor(R.color.ClearColor));
 						        			view.setBackgroundResource(R.drawable.bg_pink);
-						        			//LayoutParams lp = view.getLayoutParams();
-						        			//DisplayMetrics dm = getResources().getDisplayMetrics();
-						        			
-						        			//view.setLayoutParams(new LayoutParams(lp.width, (int)(50 * dm.density)));
 						        			return view;
-						        			
 						        		};
 						    };
 							routeList.setAdapter(adapter);
 						}
 					} catch (JSONException e) {
-						e.printStackTrace();
 					}
-					
 				}
 				
 				@Override
-				public void onProgress(Integer progress) {
-					
+				public void onInvalidToken() {
+					getApplication().getSharedPreferences("artMania", 0).edit().putBoolean("logout", true).commit();
+					Intent intent = new Intent(getApplicationContext(), SplashActivity.class);
+					//intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+					startActivity(intent);
+					super.onInvalidToken();
 				}
-				
+
 				@Override
-				public void onFail(HttpResponse response, Exception ex) {
+				public void onFail(HttpResponse arg0, Exception arg1) {
 					
 				}
 			});
 		} catch (JSONException e) {
-			e.printStackTrace();
 		}
 	}
 }

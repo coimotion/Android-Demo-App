@@ -40,17 +40,15 @@ public class AboutActivity extends ActionBarActivity {
 					
 					@Override
 					public void onSuccess(Map<String, Object> result) {
-						Intent intent = new Intent();
-						intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-						intent.setClass(AboutActivity.this, LoginActivity.class);
+						//getApplication().getSharedPreferences("artMania", 0).edit().putBoolean("logout", true).commit();
+						Intent intent = new Intent(getApplicationContext(), SplashActivity.class);
 						startActivity(intent);
 					}
 					
 					@Override
 					public void onFail(HttpResponse response, Exception ex) {
-						Intent intent = new Intent();
-						intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-						intent.setClass(AboutActivity.this, LoginActivity.class);
+						//getApplication().getSharedPreferences("artMania", 0).edit().putBoolean("logout", true).commit();
+						Intent intent = new Intent(getApplicationContext(), SplashActivity.class);
 						startActivity(intent);
 					}
 					

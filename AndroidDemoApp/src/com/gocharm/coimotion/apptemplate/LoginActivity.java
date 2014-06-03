@@ -10,8 +10,10 @@ import com.coimotion.csdk.common.COIMException;
 import com.coimotion.csdk.util.ReqUtil;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.res.Resources.Theme;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -33,6 +35,13 @@ public class LoginActivity extends Activity {
 						regRadio;
 	private RadioGroup radioGroup;
 	private ProgressDialog pDialog;
+	
+	@Override
+	public void onBackPressed() {
+		// TODO Auto-generated method stub
+		super.onBackPressed();
+		getApplication().getSharedPreferences("artMania", 0).edit().putBoolean("closeApp", true).commit();
+	}
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -79,8 +88,12 @@ public class LoginActivity extends Activity {
 						
 						@Override
 						public void onFail(HttpResponse response, Exception ex) {
-							Log.i(LOG_TAG, "fail\n" + ex.getLocalizedMessage());
 							pDialog.dismiss();
+							AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
+							builder.setTitle("Login");
+							builder.setMessage(ex.getLocalizedMessage());
+							builder.show();
+							Log.i(LOG_TAG, "fail\n" + ex.getLocalizedMessage());
 						}
 					});
 				}
@@ -111,9 +124,12 @@ public class LoginActivity extends Activity {
 						
 						@Override
 						public void onFail(HttpResponse response, Exception ex) {
-							// TODO Auto-generated method stub
-							Log.i(LOG_TAG, "fail\n" + ex.getLocalizedMessage());
 							pDialog.dismiss();
+							AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
+							builder.setTitle("Login");
+							builder.setMessage(ex.getLocalizedMessage());
+							builder.show();
+							Log.i(LOG_TAG, "fail\n" + ex.getLocalizedMessage());
 						}
 					});
 				}
@@ -125,7 +141,6 @@ public class LoginActivity extends Activity {
 		
 		radioGroup = (RadioGroup) findViewById(R.id.radioGroup1);
 		radioGroup.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-			
 			@Override
 			public void onCheckedChanged(RadioGroup group, int checkedId) {
 				if(loginRadio.isChecked()){
@@ -139,5 +154,4 @@ public class LoginActivity extends Activity {
 			}
 		});
 	}
-
 }

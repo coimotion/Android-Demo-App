@@ -3,7 +3,8 @@ package com.gocharm.coimotion.apptemplate;
 import com.coimotion.csdk.common.COIMException;
 import com.coimotion.csdk.util.ReqUtil;
 
-import android.R.layout;
+import android.R.bool;
+import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.FragmentTransaction;
@@ -28,7 +29,7 @@ public class ShowListActivity extends ActionBarActivity {
 	private LinearLayout mLlvDrawerContent;
 	private ListView mLsvDrawerMenu;
 	// 記錄被選擇的選單指標用
-	private int mCurrentMenuItemPosition = -1;
+	private int  pIndex = -1,cIndex = -1;
 	private String title = null;
 	private boolean flag = false;
 	private boolean open = true;
@@ -51,13 +52,12 @@ public class ShowListActivity extends ActionBarActivity {
 		}
 		
 		setContentView(R.layout.activity_main);
-		mDrawerLayout = (DrawerLayout) findViewById(R.id.drw_layout);
-	    // 設定 Drawer 的影子
-	    //mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
 		
-		// 生成一个SpinnerAdapter
+		mDrawerLayout = (DrawerLayout) findViewById(R.id.drw_layout);
+	    // 生成SpinnerAdapter
         SpinnerAdapter adapter = ArrayAdapter.createFromResource(this, R.array.period, android.R.layout.simple_spinner_dropdown_item);
         // 得到ActionBar
+        
         final ActionBar actionBar = getSupportActionBar();
         // 将ActionBar的操作模型设置为NAVIGATION_MODE_LIST
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
@@ -66,12 +66,10 @@ public class ShowListActivity extends ActionBarActivity {
 			
 			@Override
 			public boolean onNavigationItemSelected(int itemPosition, long arg1) {
-				// TODO Auto-generated method stub
 	        	if(!open){
-	        		
-		            if(mCurrentMenuItemPosition > -1) {
+		            if(cIndex > -1) {
 			        	Log.i(LOG_TAG, "selected: " + itemPosition);
-			        	ShowListFrag listFrag = ShowListFrag.newInstance(catIDs[mCurrentMenuItemPosition], itemPosition);
+			        	ShowListFrag listFrag = ShowListFrag.newInstance(catIDs[cIndex], itemPosition);
 						FragmentTransaction ft  = getSupportFragmentManager().beginTransaction();
 						ft.replace(R.id.container, listFrag);
 						ft.commit();
@@ -104,11 +102,11 @@ public class ShowListActivity extends ActionBarActivity {
 	                public void onDrawerClosed(View drawerView) {
 	                	if(flag) {
 	                		flag = false;
-		                    if (mCurrentMenuItemPosition > -1) {
+		                    if (cIndex > -1) {
 		                    	//flag = false;
-		                    	title = MENU_ITEMS[mCurrentMenuItemPosition];
+		                    	title = MENU_ITEMS[cIndex];
 		                        getSupportActionBar().setTitle(title);
-		                        ShowListFrag listFrag = ShowListFrag.newInstance(catIDs[mCurrentMenuItemPosition], 0);
+		                        ShowListFrag listFrag = ShowListFrag.newInstance(catIDs[cIndex], 0);
 		        				FragmentTransaction ft  = getSupportFragmentManager().beginTransaction();
 		        				ft.replace(R.id.container, listFrag);
 		        				ft.commit();
@@ -121,27 +119,28 @@ public class ShowListActivity extends ActionBarActivity {
 	                	
 	                }
 	    };
-	 
 	    mDrawerLayout.setDrawerListener(mDrawerToggle);
+	    setDrawerMenu();
 	    
+	    String catID = "";
 		if (savedInstanceState == null) {
-			Bundle extras = getIntent().getExtras();
-			String catID = extras.getString("catID");
-			
-			for (int i = 0; i < 9; i++) {
-				if (catIDs[i].equals(catID)) {
-					Log.i(LOG_TAG, "equals " + MENU_ITEMS[i]);
-					title = MENU_ITEMS[i];
-					getSupportActionBar().setTitle(MENU_ITEMS[i]);
-					mCurrentMenuItemPosition = i;
-					
-				}
-			}
-			ShowListFrag slFrag = ShowListFrag.newInstance(catID, 0);
-			getSupportFragmentManager().beginTransaction()
-				.replace(R.id.container, slFrag).commit();
+			catID = getIntent().getExtras().getString("catID");
 		}
-		setDrawerMenu();
+		else {
+			catID = savedInstanceState.getString("catID");
+		}
+		for (int i = 0; i < 9; i++) {
+			if (catIDs[i].equals(catID)) {
+				Log.i(LOG_TAG, "equals " + MENU_ITEMS[i]);
+				title = MENU_ITEMS[i];
+				getSupportActionBar().setTitle(MENU_ITEMS[i]);
+				cIndex = i;
+				
+			}
+		}
+		ShowListFrag slFrag = ShowListFrag.newInstance(catID, 0);
+		getSupportFragmentManager().beginTransaction().replace(R.id.container, slFrag).commit();
+		
 		getSupportActionBar().setHomeButtonEnabled(true);
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 		
@@ -154,35 +153,11 @@ public class ShowListActivity extends ActionBarActivity {
         mDrawerToggle.syncState();
     }
 	
-	class DropDownListenser implements OnNavigationListener
-    {
-        // 得到和SpinnerAdapter里一致的字符数组
-        //String[] listNames = getResources().getStringArray(R.array.period);
-
-        /* 当选择下拉菜单项的时候，将Activity中的内容置换为对应的Fragment */
-        public boolean onNavigationItemSelected(int itemPosition, long itemId)
-        {
-        	Log.i(LOG_TAG, "open? " + open);
-        	if(!open){
-        		
-	            if(mCurrentMenuItemPosition > -1) {
-		        	Log.i(LOG_TAG, "selected: " + itemPosition);
-		        	ShowListFrag listFrag = ShowListFrag.newInstance(catIDs[mCurrentMenuItemPosition], itemPosition);
-					FragmentTransaction ft  = getSupportFragmentManager().beginTransaction();
-					ft.replace(R.id.container, listFrag);
-					ft.commit();
-	            }
-        	}
-        	open = false;
-            return true;
-        }
-    }
-	
 	private void setDrawerMenu() {
 	    // 定義新宣告的兩個物件：選項清單的 ListView 以及 Drawer內容的 LinearLayou
 	    mLsvDrawerMenu = (ListView) findViewById(R.id.lsv_drawer_menu);
 	    mLlvDrawerContent = (LinearLayout) findViewById(R.id.llv_left_drawer);
-	    mLsvDrawerMenu.setSelection(mCurrentMenuItemPosition);
+	    mLsvDrawerMenu.setSelection(cIndex);
 	    // 當清單選項的子物件被點擊時要做的動作
 	    mLsvDrawerMenu.setOnItemClickListener(new OnItemClickListener() {
 	 
@@ -201,12 +176,10 @@ public class ShowListActivity extends ActionBarActivity {
 	}
 	
 	private void selectMenuItem(int position) {
-		Log.i(LOG_TAG,"position: " + position);
-		Log.i(LOG_TAG,"Current: " + mCurrentMenuItemPosition);
-		if(position != mCurrentMenuItemPosition) {
+		if(position != cIndex) {
 			flag = true;
 		}
-	    mCurrentMenuItemPosition = position;
+	    cIndex = position;
 	    // 將選單的子物件設定為被選擇的狀態
 	    mLsvDrawerMenu.setItemChecked(position, true);	 
 	    // 關掉 Drawer
