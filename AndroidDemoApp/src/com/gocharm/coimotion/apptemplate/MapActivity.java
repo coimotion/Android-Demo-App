@@ -21,12 +21,10 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import android.support.v7.app.ActionBarActivity;
-import android.annotation.SuppressLint;
-import android.app.ActionBar;
-import android.app.Activity;
+import android.annotation.TargetApi;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
-import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -70,10 +68,13 @@ public class MapActivity extends ActionBarActivity {
 		}
 	}
 	
+	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuItem route = menu.add(0,111,0,"路線列表");
-		route.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+		if(android.os.Build.VERSION.SDK_INT > 10){
+			route.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+		}
 		return true;
 	}
 

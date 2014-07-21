@@ -33,10 +33,10 @@ public class GridActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_grid);
 		
-		b1 = (ImageButton) findViewById(R.id.buySiteBut);
+		b1 = (ImageButton) findViewById(R.id.imageButton1);
 		b1.setOnClickListener(listener);
 		
-		b2 = (ImageButton) findViewById(R.id.mapButton);
+		b2 = (ImageButton) findViewById(R.id.imageButton2);
 		b2.setOnClickListener(listener);
 		
 		b3 = (ImageButton) findViewById(R.id.imageButton3);

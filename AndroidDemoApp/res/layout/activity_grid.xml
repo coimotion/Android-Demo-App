@@ -53,7 +53,7 @@
             android:orientation="horizontal" >
 
             <ImageButton
-                android:id="@+id/buySiteBut"
+                android:id="@+id/imageButton1"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:background="@color/ClearColor"
@@ -62,7 +62,7 @@
                 android:tag="1" />
 
             <ImageButton
-                android:id="@+id/mapButton"
+                android:id="@+id/imageButton2"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:background="@color/ClearColor"

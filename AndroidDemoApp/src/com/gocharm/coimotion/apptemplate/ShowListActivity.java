@@ -81,7 +81,6 @@ public class ShowListActivity extends ActionBarActivity {
 			}
 		});
 		
-		
 		//actionBar.setDisplayHomeAsUpEnabled(true);
 		mDrawerToggle = new ActionBarDrawerToggle(
 	            this, 
@@ -113,7 +112,8 @@ public class ShowListActivity extends ActionBarActivity {
 		        				open = true;
 		        				actionBar.setSelectedNavigationItem(0);
 		                    }
-	                    } else {
+	                    } 
+	                	else {
 	                        getSupportActionBar().setTitle(title);
 	                    }
 	                	
@@ -162,8 +162,7 @@ public class ShowListActivity extends ActionBarActivity {
 	    mLsvDrawerMenu.setOnItemClickListener(new OnItemClickListener() {
 	 
 	        @Override
-	        public void onItemClick(AdapterView<?> parent, View view,
-	                int position, long id) {
+	        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 	            selectMenuItem(position);
 	        }
 	    });

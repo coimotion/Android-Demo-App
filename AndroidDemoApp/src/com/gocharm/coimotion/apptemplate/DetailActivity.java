@@ -135,46 +135,45 @@ public class DetailActivity extends ActionBarActivity {
 							dropDown.add( timeString + "|" + showInfo.getJSONObject(i).getString("placeName"));
 						}
 						
-						SpinnerAdapter adapter = new ArrayAdapter<String>(getApplicationContext(), 
-								android.R.layout.simple_spinner_dropdown_item, dropDown)
-								{
+						SpinnerAdapter adapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, dropDown)
+						{
 
-									@Override
-									public View getView(int position, View convertView, ViewGroup parent) 
-					        		{
-										View view = convertView;
-									    if (view == null) {
-									      view = getLayoutInflater().inflate(R.layout.row_detail_spin, null);
-									    }
-					        			TextView text1 = (TextView) view.findViewById(R.id.detailTitle);
-					        			TextView text2 = (TextView) view.findViewById(R.id.detailSubtitle);
-					        			String tmpString = dropDown.get(position);
-					        			int index = tmpString.indexOf("|");
-					        			String title = tmpString.substring(0, index);
-					        			String subtitle = tmpString.substring(index+1, tmpString.length());
-					        			text1.setText(title);
-					        			text2.setText(subtitle);
-					        			return view;
-					        		};
-					        		
-					        		@Override
-									public View getDropDownView(int position, View convertView, ViewGroup parent) {
-										View view = convertView;
-									    if (view == null) {
-									      view = getLayoutInflater().inflate(R.layout.row_detail_spin, null);
-									    }
-					        			TextView text1 = (TextView) view.findViewById(R.id.detailTitle);
-					        			TextView text2 = (TextView) view.findViewById(R.id.detailSubtitle);
-					        			String tmpString = dropDown.get(position);
-					        			int index = tmpString.indexOf("|");
-					        			String title = tmpString.substring(0, index);
-					        			String subtitle = tmpString.substring(index+1, tmpString.length());
-					        			text1.setText(title);
-					        			text2.setText(subtitle);
-					        			return view;
-					        			
-					        		}
-					        	};
+							@Override
+							public View getView(int position, View convertView, ViewGroup parent) 
+			        		{
+								View view = convertView;
+							    if (view == null) {
+							      view = getLayoutInflater().inflate(R.layout.row_detail_spin, null);
+							    }
+			        			TextView text1 = (TextView) view.findViewById(R.id.detailTitle);
+			        			TextView text2 = (TextView) view.findViewById(R.id.detailSubtitle);
+			        			String tmpString = dropDown.get(position);
+			        			int index = tmpString.indexOf("|");
+			        			String title = tmpString.substring(0, index);
+			        			String subtitle = tmpString.substring(index+1, tmpString.length());
+			        			text1.setText(title);
+			        			text2.setText(subtitle);
+			        			return view;
+			        		};
+			        		
+			        		@Override
+							public View getDropDownView(int position, View convertView, ViewGroup parent) {
+								View view = convertView;
+							    if (view == null) {
+							      view = getLayoutInflater().inflate(R.layout.row_detail_spin, null);
+							    }
+			        			TextView text1 = (TextView) view.findViewById(R.id.detailTitle);
+			        			TextView text2 = (TextView) view.findViewById(R.id.detailSubtitle);
+			        			String tmpString = dropDown.get(position);
+			        			int index = tmpString.indexOf("|");
+			        			String title = tmpString.substring(0, index);
+			        			String subtitle = tmpString.substring(index+1, tmpString.length());
+			        			text1.setText(title);
+			        			text2.setText(subtitle);
+			        			return view;
+			        			
+			        		}
+			        	};
 				        final ActionBar actionBar = getSupportActionBar();
 				        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
 				        actionBar.setListNavigationCallbacks(adapter,new OnNavigationListener() {
@@ -292,10 +291,6 @@ public class DetailActivity extends ActionBarActivity {
 					e.printStackTrace();
 				}
 				
-			}
-			
-			@Override
-			public void onProgress(Integer progress) {
 			}
 			
 			@Override

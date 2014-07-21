@@ -75,7 +75,6 @@ public class ShowListFrag extends Fragment {
 		
 		Date now = new Date(System.currentTimeMillis());
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-		Log.i(LOG_TAG, " now " + formatter.format(now));
 		Calendar cal = Calendar.getInstance();
 	    cal.setTime(now);
 	    cal.add(Calendar.DAY_OF_MONTH, 7*weeks);
