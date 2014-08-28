@@ -3,8 +3,6 @@ package com.gocharm.coimotion.apptemplate;
 import com.coimotion.csdk.common.COIMException;
 import com.coimotion.csdk.util.ReqUtil;
 
-import android.R.bool;
-import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.FragmentTransaction;

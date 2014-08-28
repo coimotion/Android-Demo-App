@@ -1,7 +1,6 @@
 package com.gocharm.coimotion.apptemplate;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -13,20 +12,13 @@ import org.json.JSONObject;
 import com.coimotion.csdk.common.COIMCallListener;
 import com.coimotion.csdk.common.COIMException;
 import com.coimotion.csdk.util.ReqUtil;
-import com.gocharm.coimotion.apptemplate.R.drawable;
-
 import android.support.v7.app.ActionBarActivity;
 import android.annotation.SuppressLint;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewGroup.LayoutParams;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;

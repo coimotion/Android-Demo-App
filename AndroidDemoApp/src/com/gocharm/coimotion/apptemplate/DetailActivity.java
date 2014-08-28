@@ -11,7 +11,6 @@ import org.json.JSONObject;
 import com.coimotion.csdk.common.COIMCallListener;
 import com.coimotion.csdk.common.COIMException;
 import com.coimotion.csdk.util.ReqUtil;
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;

@@ -9,10 +9,8 @@ import com.coimotion.csdk.common.COIMException;
 import com.coimotion.csdk.util.ReqUtil;
 
 import android.support.v7.app.ActionBarActivity;
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
